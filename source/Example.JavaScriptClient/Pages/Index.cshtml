@@ -1,0 +1,22 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button id="login">Login</button>
+    <button id="api">Call API</button>
+    <button id="logout">Logout</button>
+
+    <pre id="results"></pre>
+
+
+</div>
+@section Scripts{
+    <script src="~/js/oidc-client.js" asp-append-version="true"></script>
+    <script src="~/js/app.js" asp-append-version="true"></script>
+
+}
