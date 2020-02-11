@@ -102,7 +102,20 @@ namespace Example.IdentityServer4WithAspNetCoreIdentity
                         IdentityServerConstants.StandardScopes.Profile,
                         "readAccess", "writeAccess"
                     }
-                }
+                },
+                 new Client
+        {
+            ClientId = "ro.client",
+            AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+            ClientSecrets =
+            {
+                new Secret("secret".Sha256())
+            },
+            AllowedScopes = { 
+                        "readAccess", "writeAccess" },
+             AllowOfflineAccess = true
+        }
             };
     }
 }

@@ -95,7 +95,7 @@
                         Type = SecuritySchemeType.OAuth2,
                         Flows = new OpenApiOAuthFlows
                         {
-                            AuthorizationCode = new OpenApiOAuthFlow
+                            Password = new OpenApiOAuthFlow
                             {
                                 AuthorizationUrl = new Uri("http://localhost:5000/connect/authorize"),
                                 TokenUrl = new Uri("http://localhost:5000/connect/token"),
@@ -104,9 +104,10 @@
                                 { "readAccess", "Access read operations" },
                                 { "writeAccess", "Access write operations" }
                             }
+
                             }
                         }
-                    });
+                    });;
 
                     options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
@@ -158,8 +159,8 @@
                 options =>
                 {
                     options.EnableDeepLinking();
-                    options.OAuthClientId("test-id");
-                    options.OAuthClientSecret("test-secret");
+                    options.OAuthClientId("ro.client");
+                    options.OAuthClientSecret("secret");
                     options.OAuthAppName("test-app");
                     options.OAuthScopeSeparator(" ");
                     options.OAuthUsePkce();

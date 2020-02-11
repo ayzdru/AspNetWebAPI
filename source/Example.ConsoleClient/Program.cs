@@ -51,7 +51,7 @@ namespace Example.ConsoleClient
 
             var odataClient = new ODataClient(new ODataClientSettings(apiClient, new Uri("api", UriKind.Relative))
             {
-                IgnoreResourceNotFoundException = true,
+                IgnoreResourceNotFoundException = true,               
                 OnTrace = (x, y) => Console.WriteLine(string.Format(x, y))
 
             });
