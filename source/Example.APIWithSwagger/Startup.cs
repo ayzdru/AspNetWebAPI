@@ -100,25 +100,56 @@
                                 AuthorizationUrl = new Uri("http://localhost:5000/connect/authorize"),
                                 TokenUrl = new Uri("http://localhost:5000/connect/token"),
                                 Scopes = new Dictionary<string, string>
-                            {
-                                { "readAccess", "Access read operations" },
-                                { "writeAccess", "Access write operations" }
-                            }
+                                {
+                                    { "readAccess", "Access read operations" },
+                                    { "writeAccess", "Access write operations" }
+                                }
 
                             }
                         }
-                    });;
+                    });
 
                     options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
                     {
-                        new OpenApiSecurityScheme
                         {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
-                        },
-                        new[] { "readAccess", "writeAccess" }
-                    }
-                });
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                            },
+                            new[] { "readAccess", "writeAccess" }
+                        }
+                    });
+
+
+
+                    //    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    //    {
+                    //        Type = SecuritySchemeType.OAuth2,
+                    //        Flows = new OpenApiOAuthFlows
+                    //        {
+                    //            AuthorizationCode = new OpenApiOAuthFlow
+                    //            {
+                    //                AuthorizationUrl = new Uri("http://localhost:5000/connect/authorize"),
+                    //                TokenUrl = new Uri("http://localhost:5000/connect/token"),
+                    //                Scopes = new Dictionary<string, string>
+                    //            {
+                    //                { "readAccess", "Access read operations" },
+                    //                { "writeAccess", "Access write operations" }
+                    //            }
+                    //            }
+                    //        }
+                    //    });
+
+                    //    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    //{
+                    //    {
+                    //        new OpenApiSecurityScheme
+                    //        {
+                    //            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                    //        },
+                    //        new[] { "readAccess", "writeAccess" }
+                    //    }
+                    //});
                 } );
         }
 
@@ -164,6 +195,12 @@
                     options.OAuthAppName("test-app");
                     options.OAuthScopeSeparator(" ");
                     options.OAuthUsePkce();
+
+                    //options.OAuthClientId("test-id");
+                    //options.OAuthClientSecret("test-secret");
+                    //options.OAuthAppName("test-app");
+                    //options.OAuthScopeSeparator(" ");
+                    //options.OAuthUsePkce();
                     // build a swagger endpoint for each discovered API version
                     foreach ( var description in provider.ApiVersionDescriptions )
                     {
