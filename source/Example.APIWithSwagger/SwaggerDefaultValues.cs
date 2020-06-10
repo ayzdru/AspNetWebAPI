@@ -1,5 +1,14 @@
-﻿namespace Example.APIWithSwagger
+﻿using System.Collections;
+using Microsoft.AspNet.OData.Query;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Linq;
+namespace Example.APIWithSwagger
 {
+    using Microsoft.AspNet.OData;
     using Microsoft.AspNetCore.Mvc.ApiExplorer;
     using Microsoft.OpenApi.Any;
     using Microsoft.OpenApi.Models;
@@ -46,6 +55,45 @@
                 }
 
                 parameter.Required |= description.IsRequired;
+            }
+            //EnableQueryAttribute
+
+
+            var queryAttribute = context.MethodInfo.GetCustomAttributes(true)
+                .Union(context.MethodInfo.DeclaringType.GetCustomAttributes(true))
+                .OfType<EnableQueryAttribute>().FirstOrDefault();
+            if (queryAttribute != null)
+            {
+                void RemoveParameter(AllowedQueryOptions option)
+                {
+                    if (!queryAttribute.AllowedQueryOptions.HasFlag(option))
+                    {
+                        var parameter = operation.Parameters.Where(q => q.Name == "$" + option.ToString().ToLower()).SingleOrDefault();
+                        if (parameter != null)
+                        {
+                            operation.Parameters.Remove(parameter);
+                        }
+                    }
+                }
+                if (!queryAttribute.AllowedQueryOptions.HasFlag(AllowedQueryOptions.All))
+                {
+
+                    RemoveParameter(AllowedQueryOptions.Select);
+
+                    RemoveParameter(AllowedQueryOptions.Expand);
+
+                    // Additional OData query options are available for collections of entities only
+                    if (context.MethodInfo.ReturnType.IsArray ||
+                        typeof(IQueryable).IsAssignableFrom(context.MethodInfo.ReturnType) ||
+                        typeof(IEnumerable).IsAssignableFrom(context.MethodInfo.ReturnType))
+                    {
+                        RemoveParameter(AllowedQueryOptions.Filter);
+                        RemoveParameter(AllowedQueryOptions.OrderBy);
+                        RemoveParameter(AllowedQueryOptions.Top);
+                        RemoveParameter(AllowedQueryOptions.Count);
+                    }
+                }
+
             }
         }
     }

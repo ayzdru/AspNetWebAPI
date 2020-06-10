@@ -1,4 +1,4 @@
-﻿namespace Example.APIWithSwagger
+﻿namespace Example.APIWithSwagger.Extensions
 {
     using System;
     using System.Collections;

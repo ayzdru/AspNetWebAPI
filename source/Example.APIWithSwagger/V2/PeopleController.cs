@@ -10,6 +10,7 @@
     using System.Linq;
     using static Microsoft.AspNet.OData.Query.AllowedQueryOptions;
     using static Microsoft.AspNetCore.Http.StatusCodes;
+    using Example.APIWithSwagger.Extensions;
 
     /// <summary>
     /// Represents a RESTful people service.

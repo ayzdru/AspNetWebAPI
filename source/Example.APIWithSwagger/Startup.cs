@@ -80,6 +80,7 @@
                                             .Allow( Skip | Count )
                                             .AllowTop( 100 )
                                             .AllowOrderBy( "firstName", "lastName" );
+
                 } );
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSwaggerGen(
@@ -171,7 +172,7 @@
                     routeBuilder.ServiceProvider.GetRequiredService<ODataOptions>().UrlKeyDelimiter = Parentheses;
 
                     // global odata query options
-                    routeBuilder.Count();
+                    routeBuilder.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
 
                     routeBuilder.MapVersionedODataRoutes( "odata", "api", modelBuilder.GetEdmModels() );
                 } );
